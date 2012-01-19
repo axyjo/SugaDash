@@ -210,29 +210,49 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 body {
     background-color: #000;
-    font: normal 12px/18px Verdana,sans-serif;
+    font: normal 26px/40px Verdana,sans-serif;
     color: #fff;
 }
 
 .widget {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: auto;
+    margin-right: auto;
     background-color: #4E5153;
     -webkit-border-radius: 5px;
     border-radius: 5px;
     min-height: 40px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.widget_ticker > p {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.widget_ticker > p.visible {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 300ms ease-in;
+    -webkit-transition: opacity 300ms ease-in;
 }
 
 .full {
-    width: 100%;
+    width: 90%;
     clear: both;
 }
 
 .wide {
-    width: 66%;
+    width: 60%;
     float: left;
 }
 
 .narrow {
-    width: 33%;
+    width: 30%;
     float: right;
 }
 
