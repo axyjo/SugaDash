@@ -17,7 +17,7 @@ SugaDash = {
             fetch: function() {
                 this.data = [];
                 for(var i = 0; i < this.urls.length; i++) {
-                    SugaDash.Utils.parseRSS(this.urls[i], this.fetchCallback); 
+                    SugaDash.Utils.parseRSS(this.urls[i], this.fetchCallback);
                 }
             },
             fetchCallback: function(data) {
@@ -29,15 +29,18 @@ SugaDash = {
                 this.data.push('<a href="' + url + '">' + title + '</a>');
             },
             display: function() {
-                this.container.removeClass("visible");
-                this.container.on("transitionend", this.replaceAndShow);
-                this.container.on("webkitTransitionEnd", this.replaceAndShow);
+                if(this.container.hasClass("visible")) {
+                    this.container.removeClass("visible");
+                    this.container.on("transitionend", this.replaceAndShow);
+                    this.container.on("webkitTransitionEnd", this.replaceAndShow);
+                } else {
+                    this.replaceAndShow();
+                }
             },
             replaceAndShow: function() {
-                console.log(this);
-                var random = Math.Round(Math.random() * this.data.length);
-                this.container.html(this.data[random]);
-                this.container.addClass("visible");
+                var random = Math.round(Math.random() * SugaDash.Widgets.Ticker.data.length);
+                SugaDash.Widgets.Ticker.container.html(SugaDash.Widgets.Ticker.data[random]);
+                SugaDash.Widgets.Ticker.container.addClass("visible");
             },
         },
     },
@@ -47,7 +50,7 @@ SugaDash = {
         },
         parseRSS: function(url, callback) {
             $.ajax({
-                url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(url),
+                url: 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(url),
                 dataType: 'json',
                 success: function(data) {
                     callback(data.responseData.feed);
@@ -55,6 +58,16 @@ SugaDash = {
             });
         },
     },
+
+
+    init: function() {
+        SugaDash.Widgets.Ticker.init();
+    },
 };
 
 window.SugaDash = SugaDash;
+
+$(document).ready(function() {
+    SugaDash.init();
+    SugaDash.Widgets.Ticker.fetch();
+});
